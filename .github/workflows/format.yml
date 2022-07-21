@@ -50,8 +50,11 @@ jobs:
         - name: Push Change
           if: steps.git-check.outputs.modified == 'true'
           run: |
-            git config --global user.name 'Beckham Pan'
-            git config --global user.email 'beckham.0831@yahoo.com.tw'
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-            git commit -am "Automated (PEP8 Formatting) changes"
+            git config --global user.name 'Beckham Pan' \
+            git config --global user.email 'beckham.0831@yahoo.com.tw' \
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} \
+            git commit -am "Automated (PEP8 Formatting) changes" \
             git push
+          if: steps.git-check.outputs.modified == 'false'
+          run: |
+            echo "No code formatting needed. You write Python in perfect format :)" 
