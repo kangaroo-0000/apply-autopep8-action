@@ -4,7 +4,7 @@ on: pull_request
 
 jobs:
   autopep8_format:
-    #Checks if PR is not from a fork
+    #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
@@ -32,17 +32,16 @@ jobs:
             import autopep8
             import os
 
-            for _, _, files in os.walk(os.getcwd()):
+            for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
-                if file.endswith(".py"):
+                if file.endswith(".py") and file != __file__:
                   texts = []
                   with open(os.path.join(path, file), mode='r', encoding='UTF-8') as f1:
-                    texts = f1.readlines()
+                    texts = f1.read()
                   with open(os.path.join(path, file), mode='w', encoding='UTF-8') as f2:
-                    for text in texts:
-                      text = autopep8.fix_code(text)
-                      f2.write(f'{text}\n')
+                    texts = autopep8.fix_code(texts)
+                    f2.write(f'{texts}\n')
 
         - name: Check Modified Files
           id: git-check
@@ -54,5 +53,5 @@ jobs:
             git config --global user.name 'Beckham Pan'
             git config --global user.email 'beckham.0831@yahoo.com.tw'
             git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-            git commit -am "Automated changes"
+            git commit -am "Automated (PEP8 Formatting) changes"
             git push
