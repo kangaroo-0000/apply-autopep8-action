@@ -1,0 +1,20 @@
+{
+  "name": "apply-autopep8-action",
+  "version": "1.0.0",
+  "description": "An git action that applies autopep8 to formatting every file upon every pull request.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kangaroo-0000/apply-autopep8-action.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kangaroo-0000/apply-autopep8-action/issues"
+  },
+  "homepage": "https://github.com/kangaroo-0000/apply-autopep8-action#readme"
+}
