@@ -26,7 +26,9 @@ jobs:
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
+        id: script
         with:
+          fail-on-error: false
           script: |
             import autopep8
             import os
@@ -42,6 +44,15 @@ jobs:
                     texts = autopep8.fix_code(texts)
                     f2.write(f'{texts}\n')
 
+      - name: Print errors
+        if: steps.script.outputs.error == 'true'
+        run: |
+          printenv "SCRIPT_STDOUT"
+          printenv "SCRIPT_STDERR"
+        env:
+          SCRIPT_STDOUT: ${{ steps.script.outputs.stdout }}
+          SCRIPT_STDERR: ${{ steps.script.outputs.stderr }}
+
       - name: Check Modified Files
         id: git-check
         run: echo ::set-output name=modified::$(if git diff-index --quiet HEAD --; then echo "false"; else echo "true"; fi)
@@ -56,13 +67,13 @@ jobs:
           git push
 
       - name: All Good
-        #Consider case where no file formatting is needed
+        # Consider case where no file formatting is needed
         if: steps.git-check.outputs.modified == 'false'
         run: echo "No code formatting needed. You write Python in perfect format :)"
 
-      - name: Show Job Status
-        id: git-status
-        if: always()
-        run: echo $status
-        env:
-          status: ${{job.status}}
+  # check_job:
+  #   needs: autopep8_format
+  #   runs-on: ubuntu-latest
+  #   if: ${{alwyas()}}
+  #   steps:
+  #     -
