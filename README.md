@@ -9,7 +9,7 @@ Before enabling this workflow, configure the following settings:
 4. Scroll down to "Workflow Permissions", and select "Read and Write Permissions".
 5. Tick the "Allow GitHub Actions to create and approve pull requests" box and press "Save".
 
-To grant additional permissions/accesses, a customized Token can be generated and added to the repo secret.
+Alternatively, to grant additional permissions or more flexible accesses, a customized Token can be generated and added to the repo secret.
 For more info, visit https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 
 IMPORTANT: Pulls that are requested by forked repos would trigger a FAILED Action,
