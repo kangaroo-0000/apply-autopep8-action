@@ -18,12 +18,9 @@ jobs:
           python-version: '3.8'
           
       - name: Install Prereqs
-        run: >
-        sudo apt-get update 
-        sudo apt-get -y install python3-pip 
-        pip3 --version 
-        pip install autopep8 
-        cd ${{ github.workspace }}
+        run: sudo apt-get update && sudo apt-get -y install python3-pip 
+        run: pip install autopep8 
+        run: cd ${{ github.workspace }}
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
