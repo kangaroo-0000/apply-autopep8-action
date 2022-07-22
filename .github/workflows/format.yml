@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo "? An auto-formatting action is being triggered by a 
-      ${{ github.event_name }} event."
+      - run: echo "? An auto-formatting action is being triggered by a ${{ github.event_name }} event."
       - uses: actions/checkout@v2
 
       - name: Install Prereqs
