@@ -71,7 +71,9 @@ jobs:
         if: steps.git-check.outputs.modified == 'false'
         run: echo "No code formatting needed. You write Python in perfect format :)"
 
-  check_job:
-    needs: autopep8_format
-    runs-on: ubuntu-latest
-    if: needs.autopep8_format.result == "skipped" || needs.autopep8_format.result == "failure"; then echo "Formatting Failed."; fi
+  # check job1 status. If not successfull, do something.
+  # check_job:
+  #   needs: autopep8_format
+  #   runs-on: ubuntu-latest
+  #   if: needs.autopep8_format.result == "skipped" || needs.autopep8_format.result == "failure"
+  #   steps:
