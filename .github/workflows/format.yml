@@ -56,7 +56,7 @@ jobs:
 
       - name: Check Modified Files
         id: git-check
-        run: echo ::set-output name=modified::$(if git diff --stat-- :/ ":(exclude).github/workflows/format.yml"; then echo "false"; else echo "true"; fi)
+        run: echo ::set-output name=modified::$(if git diff --stat--. ':(exclude).github/workflows/format.yml'; then echo "false"; else echo "true"; fi)
 
       - name: Push Change
         if: steps.git-check.outputs.modified == 'true'
