@@ -5,7 +5,7 @@ on: [pull_request, push]
 jobs:
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    #if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
     steps:
@@ -71,9 +71,7 @@ jobs:
         if: steps.git-check.outputs.modified == 'false'
         run: echo "No code formatting needed. You write Python in perfect format :)"
 
-  # check_job:
-  #   needs: autopep8_format
-  #   runs-on: ubuntu-latest
-  #   if: ${{alwyas()}}
-  #   steps:
-  #     -
+  check_job:
+    needs: autopep8_format
+    runs-on: ubuntu-latest
+    if: needs.autopep8_format.result == "skipped" || needs.autopep8_format.result == "failure"; then echo "Formatting Failed."; fi
