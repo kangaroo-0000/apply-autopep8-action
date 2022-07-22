@@ -6,7 +6,7 @@ jobs:
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
     #if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: macos-11
     permissions: write-all
 
     steps:
