@@ -1,6 +1,6 @@
 name: continuous auto-formatting
 
-on: pull_request
+on: [pull_request, push]
 
 jobs:
   autopep8_format:
