@@ -22,7 +22,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install autopep8
-          cd {{ github.workspace }}
+          cd ${{ github.workspace }}
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
