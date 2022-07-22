@@ -12,5 +12,5 @@ Before enabling this workflow, configure the following settings:
 Alternatively, to grant additional permissions or more flexible accesses, a customized Token can be generated and added to the repo secret.
 For more info, visit https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 
-IMPORTANT: Pulls that are requested by forked repos would trigger a FAILED Action,
+IMPORTANT: Pulls that are requested by forked repos, or Dependabots, would trigger a FAILED Action,
 for PRs coming from other repos cannot access local repo secrets.
