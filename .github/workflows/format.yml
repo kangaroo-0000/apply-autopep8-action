@@ -13,7 +13,7 @@
 
 name: continuous auto-formatting
 
-on: [pull]
+on: [pull_request]
 
 jobs:
   autopep8_format:
