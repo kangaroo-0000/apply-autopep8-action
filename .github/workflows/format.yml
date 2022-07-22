@@ -6,7 +6,7 @@ jobs:
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
     #if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: macos-11
+    runs-on: ubuntu-latest
     permissions: write-all
 
     steps:
@@ -56,7 +56,7 @@ jobs:
 
       - name: Check Modified Files
         id: git-check
-        run: echo ::set-output name=modified::$(if git diff --stat--. ':(exclude).github/workflows/format.yml'; then echo "false"; else echo "true"; fi)
+        run: echo ::set-output name=modified::$(if git diff --quiet; then echo "false"; else echo "true"; fi)
 
       - name: Push Change
         if: steps.git-check.outputs.modified == 'true'
