@@ -9,7 +9,7 @@
 # For more info, visit https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 
 # IMPORTANT: Pulls that are requested by forked repos would trigger a FAILED Action,
-# for PRs coming from alien repos cannot access repo secrets.
+# for PRs coming from other repos cannot access local repo secrets.
 
 name: continuous auto-formatting
 
