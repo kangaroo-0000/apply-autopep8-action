@@ -19,8 +19,8 @@ jobs:
           
       - name: Install Prereqs
         run: |
-        python -m pip install --upgrade pip \
-        pip install autopep8 \
+        python -m pip install --upgrade pip 
+        pip install autopep8 
         cd ${{ github.workspace }}
 
       - name: Run Python Script
@@ -48,12 +48,19 @@ jobs:
         - name: Push Change
           if: steps.git-check.outputs.modified == 'true'
           run: |
-            git config --global user.name 'Beckham Pan' \
-            git config --global user.email 'beckham.0831@yahoo.com.tw' \
-            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} \
-            git commit -am "Automated (PEP8 Formatting) changes" \
+            git config --global user.name 'Beckham Pan' 
+            git config --global user.email 'beckham.0831@yahoo.com.tw' 
+            git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} 
+            git commit -am "Automated (PEP8 Formatting) changes" 
             git push
           # Consider case where no file formatting is needed
           if: steps.git-check.outputs.modified == 'false'
           run: |
             echo "No code formatting needed. You write Python in perfect format :)" 
+
+        - name: Show Job Status
+          id: git-status
+          if: always() 
+          run: echo $status
+          env:
+            status: ${{job.status}}
