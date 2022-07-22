@@ -8,6 +8,9 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
 
+    outputs:
+      output1: ${{steps.command_line_outputs.outputs}}
+      
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
       - uses: actions/checkout@v2
@@ -18,9 +21,8 @@ jobs:
           python-version: '3.8'
           
       - name: Install Prereqs
-        run: sudo apt-get update && sudo apt-get -y install python3-pip 
-        run: pip install autopep8 
-        run: cd ${{ github.workspace }}
+        id: command_line_outputs
+        run: echo ::set-output name=installing::$(sudo apt-get update && sudo apt-get -y install python3-pip)
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
