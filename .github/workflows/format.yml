@@ -19,7 +19,9 @@ jobs:
           
       - name: Install Prereqs
         run: |
-        sudo pip install --upgrade pip 
+        sudo apt-get update
+        sudo apt-get -y install python3-pip
+        pip3 --version
         pip install autopep8 
         cd ${{ github.workspace }}
 
