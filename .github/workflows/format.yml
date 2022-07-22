@@ -15,11 +15,11 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.x'
+          python-version: '3.8'
           
       - name: Install Prereqs
         run: |
-        python -m pip install --upgrade pip 
+        sudo pip install --upgrade pip 
         pip install autopep8 
         cd ${{ github.workspace }}
 
