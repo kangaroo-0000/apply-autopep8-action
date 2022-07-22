@@ -34,7 +34,7 @@ jobs:
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
-                if file.endswith(".py") and file != __file__:
+                if file.endswith(".py"):
                   texts = []
                   with open(os.path.join(path, file), mode='r', encoding='UTF-8') as f1:
                     texts = f1.read()
