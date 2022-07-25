@@ -16,7 +16,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print modified files
         run: |
-          for file in ${{ steps.abc.outputs.added }}; do 
+          for file in ${{ steps.abc.outputs.all }}; do 
             $MODIFIED_FILES += ("$file")
             echo "Added: ${file}"
           done
