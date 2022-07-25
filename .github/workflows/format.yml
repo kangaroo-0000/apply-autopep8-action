@@ -2,7 +2,7 @@ name: continuous auto-formatting
 
 on: [pull_request, push]
 env:
-  MODIFIED_FILES: ("APPLE")
+  MODIFIED_FILES: ()
 
 jobs:
   get_input:
@@ -18,7 +18,7 @@ jobs:
         run: |
           file = ${{ steps.abc.outputs.all }}
           while IFS=" " read -r file; do 
-            ${{env.MODIFIED_FILES}}+="$(file)"
+            ${{env.MODIFIED_FILES}}+=( "$file" )
             echo "Added: ${file}"
           done
 
