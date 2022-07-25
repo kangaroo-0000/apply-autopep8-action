@@ -18,7 +18,7 @@ jobs:
         run: |
           file = ${{ steps.abc.outputs.all }}
           while IFS=read -r file; do 
-            $MODIFIED_FILES += ("$file")
+            $MODIFIED_FILES+=( "$file" )
             echo "Added: ${file}"
           done
 
