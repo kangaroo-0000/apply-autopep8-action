@@ -2,7 +2,7 @@ name: continuous auto-formatting
 
 on: [pull_request, push]
 env:
-  MODIFIED_FILES: ()
+  MODIFIED_FILES: ("APPLE")
 
 jobs:
   get_input:
@@ -16,7 +16,8 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print modified files
         run: |
-          for file in ${{ steps.abc.outputs.all }}; do 
+          file = ${{ steps.abc.outputs.all }}
+          while IFS=read -r file; do 
             $MODIFIED_FILES += ("$file")
             echo "Added: ${file}"
           done
