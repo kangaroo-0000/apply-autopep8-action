@@ -10,11 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: jitterbit/get-changed-files@v1
-        id: Get modified files
+        id: abc
         with:
           format: space-delimited
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Print files
+      - name: Print modified files
         run: |
           for file in ${{ steps.abc.outputs.added }}; do 
             $MODIFIED_FILES += (file)
