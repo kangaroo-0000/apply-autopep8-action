@@ -17,7 +17,7 @@ jobs:
       - name: Print modified files
         run: |
           for file in ${{ steps.abc.outputs.added }}; do 
-            $MODIFIED_FILES += (file)
+            $MODIFIED_FILES += ("$file")
             echo "Added: ${file}"
           done
 
