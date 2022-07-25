@@ -1,6 +1,8 @@
 name: continuous auto-formatting
 
 on: [pull_request, push]
+env:
+  MODIFIED_FILES: ()
 
 jobs:
   get_input:
@@ -15,10 +17,9 @@ jobs:
       - name: Print modified files
         run: |
           file = ${{ steps.abc.outputs.all }}
+          echo $file
           while IFS=" " read -r file; do 
-            echo 'filename<<" "' >> $GITHUB_ENV
-            "$file" >> $GITHUB_ENV
-            echo " " >> $GITHUB_ENV
+            ${{env.MODIFIED_FILES}}+=("$file")
           done
 
   autopep8_format:
