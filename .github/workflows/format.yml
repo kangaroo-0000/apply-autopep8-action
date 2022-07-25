@@ -1,11 +1,30 @@
 name: continuous auto-formatting
 
 on: [pull_request, push]
+env:
+  MODIFIED_FILES: ()
 
 jobs:
+  get_input:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jitterbit/get-changed-files@v1
+        id: Get modified files
+        with:
+          format: space-delimited
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print files
+        run: |
+          for file in ${{ steps.abc.outputs.added }}; do 
+            $MODIFIED_FILES += (file)
+            echo "Added: ${file}"
+          done
+
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
     #if: github.event.pull_request.head.repo.full_name == github.repository
+    needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
 
@@ -33,7 +52,8 @@ jobs:
           script: |
             import autopep8
             import os
-
+            change = get_input(MODIFIED_FILES)
+            print(change)
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
