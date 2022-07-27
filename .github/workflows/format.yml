@@ -24,6 +24,8 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo "::set-output name=value::"$MODIFIED_FILES""
+          echo "Printing modified files:"
+          echo ${{needs.get_input.outputs.value}}
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -48,6 +50,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install autopep8
+          echo "Printing modified files
           echo ${{needs.get_input.outputs.value}}}
           cd ${{ github.workspace }}
 
