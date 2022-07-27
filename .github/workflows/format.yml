@@ -20,6 +20,7 @@ jobs:
           while IFS=" " read -r file; do 
             MODIFIED_FILES+=file
           done
+          echo "::set-output name=value::$MODIFIED_FILES"
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -27,6 +28,8 @@ jobs:
     needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
+    env:
+      Modified: ${{needs.get_input.outputs.value}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
@@ -52,8 +55,7 @@ jobs:
           script: |
             import autopep8
             import os
-            change = get_input(MODIFIED_FILES)
-            print(change)
+
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
