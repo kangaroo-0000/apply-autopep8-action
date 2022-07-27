@@ -29,7 +29,6 @@ jobs:
       - name: Autopep8 auto-formatting
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
       - run: echo "Result is ${{get_input.outputs.value}}"
-      - uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -42,7 +41,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install autopep8
           echo "Printing modified files:"
-          echo ${{needs.get_input.outputs.value}}
           cd ${{ github.workspace }}
 
       - name: Run Python Script
@@ -53,7 +51,7 @@ jobs:
           script: |
             import autopep8
             import os
-            print(os.environ['Modified'])
+      
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
