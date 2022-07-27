@@ -24,8 +24,7 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          echo "good
-          echo "::set-output name=value::$MODIFIED_FILES"
+          echo "::set-output name=value::${MODIFIED_FILES[*]}"
           echo ${{needs.get_input.outputs.value}}
 
   autopep8_format:
@@ -35,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     env:
-      Modified: ${{needs.get_input.outputs.value}}
+      Modified: ${{fromJson(needs.get_input.outputs.value)}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
