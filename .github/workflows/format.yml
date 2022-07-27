@@ -1,7 +1,8 @@
 name: continuous auto-formatting
 
 on: [pull_request, push]
-
+env:
+  MODIFIED_FILES: ${{decalre -a ()}}
 jobs:
   get_input:
     runs-on: ubuntu-latest
@@ -19,12 +20,11 @@ jobs:
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file"
-          declare -a MODIFIED_FILES=()
           while IFS=" " read -r file; do 
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          echo "::set-output name=value::'${MODIFIED_FILES[*]} | jq -s'"
+          # echo "::set-output name=value::'${MODIFIED_FILES[*]} | jq -s'"
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -32,12 +32,10 @@ jobs:
     needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
-    env:
-      Modified: ${{fromJson(needs.get_input.outputs.value)}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
-      - run: echo "Result is $Modified"
+      - run: echo ${MODIFIED_FILES[*]}
       - uses: actions/checkout@v2
 
       - name: Set up Python
