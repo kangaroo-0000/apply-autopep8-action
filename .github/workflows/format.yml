@@ -23,8 +23,9 @@ jobs:
           while IFS=" " read -r file; do 
             MODIFIED_FILES+=file
           done
-          echo "::set-output name=value::"$MODIFIED_FILES""
-          echo "Printing modified files:"
+          echo ${MODIFIED_FILES[*]}
+          echo "good
+          echo "::set-output name=value::$MODIFIED_FILES"
           echo ${{needs.get_input.outputs.value}}
 
   autopep8_format:
@@ -50,7 +51,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install autopep8
-          echo "Printing modified files
+          echo "Printing modified files:"
           echo ${{needs.get_input.outputs.value}}}
           cd ${{ github.workspace }}
 
