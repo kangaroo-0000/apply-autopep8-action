@@ -25,7 +25,11 @@ jobs:
           done
           echo ${MODIFIED_FILES[*]}
           echo "::set-output name=value::${MODIFIED_FILES[*]}"
-          echo ${{needs.get_input.outputs.value}}
+          if: false
+          - run: echo $try
+          env:
+            try: ${{ steps.outputs.value && fromJSON(steps.outputs.value) }}
+          if: false
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -51,7 +55,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install autopep8
           echo "Printing modified files:"
-          echo ${{needs.get_input.outputs.value}}}
+          echo ${{needs.get_input.outputs.value}}
           cd ${{ github.workspace }}
 
       - name: Run Python Script
