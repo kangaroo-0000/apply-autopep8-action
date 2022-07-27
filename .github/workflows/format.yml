@@ -18,6 +18,9 @@ jobs:
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file"
+          while IFS=" " read -r file; do 
+            ${{env.MODIFIED_FILES}}+=("$file")
+          done
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
