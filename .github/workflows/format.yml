@@ -37,7 +37,7 @@ jobs:
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
-      - run: echo ${Modified[*]}
+      - run: echo "Result is "$Modified[*]""
       - uses: actions/checkout@v2
 
       - name: Set up Python
