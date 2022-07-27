@@ -19,7 +19,7 @@ jobs:
           file=${{ steps.abc.outputs.all }}
           echo "$file"
           while IFS=" " read -r file; do 
-            ${{env.MODIFIED_FILES}}+=("$file")
+            ${{env.MODIFIED_FILES}}+=file
           done
 
   autopep8_format:
