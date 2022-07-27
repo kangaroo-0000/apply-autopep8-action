@@ -55,7 +55,7 @@ jobs:
           script: |
             import autopep8
             import os
-            print(${{Modified}})
+            modified = get_input(Modified)
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
