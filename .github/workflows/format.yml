@@ -15,7 +15,6 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print modified files
-        shell: bash
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file"
