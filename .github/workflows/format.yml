@@ -24,13 +24,13 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          #printf "%s" "${MODIFIED_FILES[*]}" > $modified.txt
+          printf "%s" "${MODIFIED_FILES[*]}" > $modified.txt
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: committed_filenames
-          path: modified.txt
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: committed_filenames
+      #     path: modified.txt
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
