@@ -24,7 +24,7 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          echo "::set-output name=value::'${fromJson(MODIFIED_FILES[*])}'"
+          echo "::set-output name=value::'${toJson(MODIFIED_FILES[*])}'"
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     env:
-      Modified: ${{needs.get_input.outputs.value}}
+      Modified: ${{fromJson(needs.get_input.outputs.value)}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
