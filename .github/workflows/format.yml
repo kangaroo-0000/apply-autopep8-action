@@ -16,7 +16,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Print modified files
         run: |
-          file = (${{ steps.abc.outputs.all }})
+          file = "${{ steps.abc.outputs.all }}"
           echo "$file"
 
   autopep8_format:
