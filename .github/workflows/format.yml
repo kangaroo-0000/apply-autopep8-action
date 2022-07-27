@@ -33,10 +33,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     env:
-      Modified: ${{fromJson(needs.get_input.outputs.value)}}
+      Modified: ${{needs.get_input.outputs.value}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
+      - run: echo ${Modified[*]}
       - uses: actions/checkout@v2
 
       - name: Set up Python
