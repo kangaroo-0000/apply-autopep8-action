@@ -15,8 +15,8 @@ jobs:
         with:
           format: space-delimited
           token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Print modified files
-        id: bcd
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file"
@@ -25,7 +25,13 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          echo "::set-output name=value::${MODIFIED_FILES[*]}"
+          printf "%s " "${MODIFIED_FILES[*]}" > $modified.txt
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: committed_filenames
+          path: modified.txt
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
@@ -33,14 +39,20 @@ jobs:
     needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
-    env:
-      Modified: ${{needs.get_input.steps.bcd.outputs.value}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
-      - run: echo "Result is $Modified"
-      - uses: actions/checkout@v2
 
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: committed_filenames
+        shell: bash
+        run: |
+          value = 'cat modified.txt'
+          echo The result is $value
+
+      - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -54,6 +66,7 @@ jobs:
           echo "Printing modified files:"
           echo ${{needs.get_input.outputs.value}}
           cd ${{ github.workspace }}
+
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
         id: script
@@ -73,6 +86,7 @@ jobs:
                   with open(os.path.join(path, file), mode='w', encoding='UTF-8') as f2:
                     texts = autopep8.fix_code(texts)
                     f2.write(f'{texts}\n')
+
       - name: Print errors
         if: steps.script.outputs.error == 'true'
         run: |
@@ -94,6 +108,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.SECRET_TOKEN }}@github.com/${{ github.repository }}
           git commit -a -m "Automated (PEP8 Formatting) changes" 
           git push
+
       - name: All Good
         # Consider case where no file formatting is needed
         if: steps.git-check.outputs.modified == 'false'
