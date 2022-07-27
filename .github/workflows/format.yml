@@ -39,8 +39,9 @@ jobs:
     permissions: write-all
 
     steps:
-      - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+      # - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
