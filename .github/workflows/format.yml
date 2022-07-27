@@ -24,7 +24,7 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          printf "%s" "${MODIFIED_FILES[*]}" > $modified.txt
+          #printf "%s" "${MODIFIED_FILES[*]}" > $modified.txt
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
@@ -41,6 +41,7 @@ jobs:
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
+      - uses: actions/checkout@v2
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -51,7 +52,6 @@ jobs:
           value = 'cat modified.txt'
           echo The result is $value
 
-      - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
