@@ -51,15 +51,12 @@ jobs:
           name: committed_filenames
           path: modified.txt
 
-      - name: Print Modified Files
+      - name: Set Modified Files as Env
         shell: bash
         run: |
-          cat modified.txt/modified.txt
           file=$(<modified.txt/modified.txt)
-          echo $file
           echo "fuck=${file}" >> $GITHUB_ENV
-          echo "hello"
-          echo ${{env.fuck}}
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -71,6 +68,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install autopep8
           cd ${{ github.workspace }}
+          echo ${{ env.fuck }}
 
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
