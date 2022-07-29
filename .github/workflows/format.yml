@@ -27,6 +27,7 @@ jobs:
           done
           echo ${MODIFIED_FILES[*]}
           printf "%s " "${MODIFIED_FILES[*]}" > $modified.txt
+          echo "end" >> $modified.txt
           ls
           pwd
 
@@ -34,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: committed_filenames
-          path: ${{ github.workspace }}/modified.txt
+          path: apply-autopep8-action/modified.txt
 
   autopep8_format:
     #Checks if PR is not from a fork. Avoids Action failure because if PR comes from another repo, it cannot access repo secret.
