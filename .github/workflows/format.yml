@@ -26,11 +26,8 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          printf "%s\n" ${MODIFIED_FILES[*]} > $modified.txt
-          echo "end" >> $modified.txt
-          ls
-          pwd
-
+          printf "%s\n" ${MODIFIED_FILES[@]} > $modified.txt
+          cat modified.txt
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
