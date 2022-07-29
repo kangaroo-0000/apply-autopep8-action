@@ -20,13 +20,7 @@ jobs:
         shell: bash
         run: |
           file=${{ steps.abc.outputs.all }}
-          echo "$file"
-          declare -a MODIFIED_FILES=()
-          while IFS=" " read -r file; do 
-            MODIFIED_FILES+=file
-          done
-          echo ${MODIFIED_FILES[*]}
-          printf "%s\n" ${MODIFIED_FILES[@]} > $modified.txt
+          echo "$file" > modified.txt
           cat modified.txt
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
