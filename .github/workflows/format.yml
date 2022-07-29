@@ -81,13 +81,16 @@ jobs:
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
-                if file.endswith(".py") and file == modified_file for modified_file in modified.split():
-                  texts = []
-                  with open(os.path.join(path, file), mode='r', encoding='UTF-8') as f1:
-                    texts = f1.read()
-                  with open(os.path.join(path, file), mode='w', encoding='UTF-8') as f2:
-                    texts = autopep8.fix_code(texts)
-                    f2.write(f'{texts}\n')
+                print(file)
+                if file.endswith(".py"):
+                  for modified_file in modified.split():
+                    if os.path.basename(modified_file) == file:
+                      texts = []
+                      with open(os.path.join(path, file), mode='r', encoding='UTF-8') as f1:
+                        texts = f1.read()
+                      with open(os.path.join(path, file), mode='w', encoding='UTF-8') as f2:
+                        texts = autopep8.fix_code(texts)
+                        f2.write(f'{texts}\n')
 
       - name: Print errors
         if: steps.script.outputs.error == 'true'
