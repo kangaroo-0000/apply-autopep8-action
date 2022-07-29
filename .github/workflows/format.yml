@@ -48,6 +48,7 @@ jobs:
       - name: Print Modified Files
         shell: bash
         run: |
+          ls modified.txt
           cat modified.txt
           echo The result is $value
 
