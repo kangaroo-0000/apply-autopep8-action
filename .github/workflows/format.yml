@@ -17,6 +17,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print modified files
+        shell: bash
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file"
@@ -26,6 +27,8 @@ jobs:
           done
           echo ${MODIFIED_FILES[*]}
           printf "%s " "${MODIFIED_FILES[*]}" > $modified.txt
+          ls
+          pwd
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
