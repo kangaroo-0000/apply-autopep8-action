@@ -56,7 +56,8 @@ jobs:
         run: |
           cat modified.txt/modified.txt
           file=$(<modified.txt/modified.txt)
-          echo "fuck=$file" >> $GITHUB_ENV
+          echo $file
+          echo "fuck=${file}" >> $GITHUB_ENV
           echo "hello"
           echo ${{env.fuck}}
       - name: Set up Python
