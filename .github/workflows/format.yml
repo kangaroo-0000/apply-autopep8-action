@@ -81,7 +81,6 @@ jobs:
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
-                print(file)
                 if file.endswith(".py"):
                   for modified_file in modified.split():
                     if os.path.basename(modified_file) == file:
