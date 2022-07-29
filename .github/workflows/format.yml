@@ -22,6 +22,7 @@ jobs:
           file=${{ steps.abc.outputs.all }}
           echo "$file" > modified.txt
           cat modified.txt
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -34,6 +35,8 @@ jobs:
     needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
+    env:
+      Modified: ${{steps.fuck.outputs.modified_files}}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
@@ -46,11 +49,12 @@ jobs:
           path: modified.txt
 
       - name: Print Modified Files
+        id: fuck
         shell: bash
         run: |
-          ls modified.txt
-          cat modified.txt/modified.txt
-          echo The result is $value
+          value='cat modified.txt/modified.txt'
+          echo "::set-output name=modified_files::$value"
+          echo $value
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -63,6 +67,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install autopep8
           cd ${{ github.workspace }}
+
       - name: Run Python Script
         uses: jannekem/run-python-script-action@v1
         id: script
@@ -82,6 +87,7 @@ jobs:
                   with open(os.path.join(path, file), mode='w', encoding='UTF-8') as f2:
                     texts = autopep8.fix_code(texts)
                     f2.write(f'{texts}\n')
+
       - name: Print errors
         if: steps.script.outputs.error == 'true'
         run: |
@@ -103,6 +109,7 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.SECRET_TOKEN }}@github.com/${{ github.repository }}
           git commit -a -m "Automated (PEP8 Formatting) changes" 
           git push
+
       - name: All Good
         # Consider case where no file formatting is needed
         if: steps.git-check.outputs.modified == 'false'
