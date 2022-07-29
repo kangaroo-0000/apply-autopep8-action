@@ -16,11 +16,17 @@ jobs:
 
       - name: Print modified files
         shell: bash
-        id: bcd
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file" > modified.txt
-          echo "::set-output name=file::$value"
+
+      # Setting the variable "file" as an output of this job should have sufficed in
+      # the sense that the second job could get access to this variable, but the
+      # second job's environment variable somehow fails in accessing "file".
+      # Could be the weird scopings of Git Action, so to play it safe, files are uploaded as
+      # artifacts. There are multiple (more efficient) ways of attaining this, such as caching or
+      # setting a workspace environment variable that all jobs can get access to, but I am just too lazy
+      # to have it figured out.
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -34,8 +40,6 @@ jobs:
     needs: get_input
     runs-on: ubuntu-latest
     permissions: write-all
-    env:
-      Modified: ${{ needs.get_input.bcd.outputs.value }}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
@@ -48,12 +52,11 @@ jobs:
           path: modified.txt
 
       - name: Print Modified Files
-        id: fuck
         shell: bash
         run: |
           value='cat modified.txt/modified.txt'
-          echo ${{ env.Modified }}
-
+          echo "fuck=$value" >> $GITHUB_ENV
+          echo "${{ env.fuck }}"
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
