@@ -55,6 +55,7 @@ jobs:
         shell: bash
         run: |
           value='cat modified.txt/modified.txt'
+          echo $value
           echo "fuck=$value" >> $GITHUB_ENV
           echo "${{ env.fuck }}"
       - name: Set up Python
