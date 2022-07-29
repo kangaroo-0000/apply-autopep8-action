@@ -49,7 +49,7 @@ jobs:
         shell: bash
         run: |
           ls modified.txt
-          cat modified.txt
+          cat modified.txt/modified.txt
           echo The result is $value
 
       - name: Set up Python
