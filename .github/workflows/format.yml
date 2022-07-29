@@ -54,10 +54,9 @@ jobs:
       - name: Print Modified Files
         shell: bash
         run: |
-          value='cat modified.txt/modified.txt'
-          echo $value
-          echo "fuck=$value" >> $GITHUB_ENV
-          echo "${{ env.fuck }}"
+          cat modified.txt/modified.txt
+          file=$(<modified.txt/modified.txt)
+          echo $file
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
