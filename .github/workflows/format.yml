@@ -77,11 +77,11 @@ jobs:
           script: |
             import autopep8
             import os
-            print(os.environ['fuck'])
+            modified = os.environ['fuck']
             for root, _, files in os.walk(os.getcwd()):
               path = root + os.path.sep
               for file in files:
-                if file.endswith(".py"):
+                if file.endswith(".py") and file == modified_file for modified_file in modified.split():
                   texts = []
                   with open(os.path.join(path, file), mode='r', encoding='UTF-8') as f1:
                     texts = f1.read()
