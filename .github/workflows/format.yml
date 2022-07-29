@@ -5,8 +5,6 @@ on: [pull_request, push]
 jobs:
   get_input:
     runs-on: ubuntu-latest
-    outputs:
-      value: ${{ steps.abc.outputs.value }}
 
     steps:
       - uses: actions/checkout@v2
@@ -18,10 +16,11 @@ jobs:
 
       - name: Print modified files
         shell: bash
+        id: bcd
         run: |
           file=${{ steps.abc.outputs.all }}
           echo "$file" > modified.txt
-          cat modified.txt
+          echo "::set-output name=file::$value"
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -36,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     env:
-      Modified: ${{ jobs.autopep8_format.steps.fuck.outputs.modified_files }}
+      Modified: ${{ needs.get_input.bcd.outputs.value }}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
@@ -53,8 +52,7 @@ jobs:
         shell: bash
         run: |
           value='cat modified.txt/modified.txt'
-          echo "::set-output name=modified_files::$value"
-          echo $value
+          echo ${{ env.Modified }}
 
       - name: Set up Python
         uses: actions/setup-python@v3
