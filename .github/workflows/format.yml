@@ -36,7 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     env:
-      Modified: ${{steps.fuck.outputs.modified_files}}
+      Modified: ${{ autopep8_format.steps.fuck.outputs.modified_files }}
 
     steps:
       - run: echo "An auto-formatting action is being triggered by a ${{ github.event_name }} event."
