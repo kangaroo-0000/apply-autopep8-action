@@ -26,7 +26,7 @@ jobs:
             MODIFIED_FILES+=file
           done
           echo ${MODIFIED_FILES[*]}
-          printf "%s " "${MODIFIED_FILES[*]}" > $modified.txt
+          printf "%s\n" ${MODIFIED_FILES[*]} > $modified.txt
           echo "end" >> $modified.txt
           ls
           pwd
